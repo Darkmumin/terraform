@@ -15,11 +15,6 @@ variable "ami_id" {
   description = "AMI Id for deploy EC2 instances"
 }
 
-variable "ami_id_dev" {
-  type        = string
-  description = "AMI Id for deploy EC2 instances"
-}
-
 variable "instance_type" {
   type        = string
   description = "EC2 instances type for deploy"
@@ -30,17 +25,7 @@ variable "server_name" {
   description = "Server Name for deploy in EC2 instances"
 }
 
-variable "server_name_dev" {
-  type        = set(string)
-  description = "Server Name for deploy in EC2 instances"
-}
-
 variable "enviroment" {
-  type        = string
-  description = "Enviroment of the server"
-}
-
-variable "enviroment_dev" {
   type        = string
   description = "Enviroment of the server"
 }

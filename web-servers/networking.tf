@@ -24,3 +24,35 @@ module "terraform-sg" {
     egress_cidr_blocks = ["0.0.0.0/0"]
     egress_rules =["https-443-tcp"]
 }
+
+
+resource "aws_security_group" "server-aws-sg" {
+  name        = "server-aws-sg"
+  description = "Security group allowing SSH and HTTP access"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name       = "server-aws-sg"
+    Enviroment = var.enviroment
+    Owner      = "edinson.rodriguez@wom.co"
+    Team       = "DevOps"
+    Project    = "Laboratorio"
+  }
+}
