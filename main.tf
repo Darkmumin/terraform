@@ -13,10 +13,10 @@ provider "aws" {
   secret_key = var.secret_key
 }
 resource "aws_instance" "nginx-server-aws" {
-  ami                    = "ami-0583d8c7a9c35822c"
+  ami                    = "ami-0427090fd1714168b"
   instance_type          = "t2.micro"
   user_data              = <<-EOF
-              # !/bin/bash
+              #!/bin/bash
               sudo yum install -y nginx
               sudo systemctl enable nginx
               sudo systemctl start nginx
@@ -25,12 +25,23 @@ resource "aws_instance" "nginx-server-aws" {
   vpc_security_group_ids = [aws_security_group.nginx-server-aws-sg.id]
   tags = {
     Name = "EC2-nginx-server-aws"
+    Enviroment = "test"
+    Owner = "edinson.rodriguez@wom.co"
+    Team = "DevOps"
+    Project = "Laboratorio"
   }
 }
 
 resource "aws_key_pair" "nginx-server-aws-ssh" {
   key_name   = "nginx-server-aws-ssh"
   public_key = file("/root/nginx-server-aws.key.pub")
+  tags = {
+    Name = "nginx-server-aws-ssh"
+    Enviroment = "test"
+    Owner = "edinson.rodriguez@wom.co"
+    Team = "DevOps"
+    Project = "Laboratorio"
+  }
 }
 
 resource "aws_security_group" "nginx-server-aws-sg" {
@@ -54,5 +65,12 @@ resource "aws_security_group" "nginx-server-aws-sg" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "nginx-server-aws-sg"
+    Enviroment = "test"
+    Owner = "edinson.rodriguez@wom.co"
+    Team = "DevOps"
+    Project = "Laboratorio"
   }
 }
