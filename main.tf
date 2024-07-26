@@ -21,6 +21,8 @@ resource "aws_instance" "server-aws" {
               sudo yum install -y nginx
               sudo systemctl enable nginx
               sudo systemctl start nginx
+              sudo dnf update -y
+              sudo shutdown -r now
               EOF
   key_name               = aws_key_pair.server-aws-ssh[each.key].key_name
   vpc_security_group_ids = [aws_security_group.server-aws-sg.id]
@@ -34,7 +36,7 @@ resource "aws_instance" "server-aws" {
 }
 
 resource "aws_key_pair" "server-aws-ssh" {
-  for_each               = var.server_name
+  for_each   = var.server_name
   key_name   = "${each.key}-ssh"
   public_key = file("/root/keys/${each.key}.key.pub")
   tags = {
